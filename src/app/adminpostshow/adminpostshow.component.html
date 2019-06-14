@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md-6">
+    <br>
+    <h3>Modify Post</h3>
+    <form (ngSubmit)="submit()">
+      <div class="form-group">
+        <label>Title of post</label>
+        <input type="textfield" class="form-control" [(ngModel)]="txTitle" name="title" placeholder="Title" />
+      </div>
+      <div class="form-group">
+        <label>Body of post</label>
+        <textarea class="form-control" placeholder="Body" [(ngModel)]="txBody" name="body"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Click image to change thumbnail</label>
+        <br>
+        <div *ngIf="!spinnerHidden" class="spinner-border" role="status"></div>
+        <img *ngIf="!imgThumbnailHidden" src="{{imgThumbnail}}" height="100" width="100" (click)="fileThumbnail.click()">
+        <br>
+        <input type="file" class="form-control-file" (change)="updateThumbnail($event.target.files.item(0))"
+          id="exampleFormControlFile1" #fileThumbnail hidden>
+      </div>
+      <button class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>

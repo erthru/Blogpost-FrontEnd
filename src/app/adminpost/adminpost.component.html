@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-12">
+    <br>
+    <div class="row">
+      <div class="col-md-8">
+        <h3>Lists Post</h3>
+      </div>
+      <div class="col-md-4">
+        <form class="form-inline my-2 my-lg-0" style="float:right" (ngSubmit)="search()">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search" [(ngModel)]="txSearch">
+          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+    <div *ngFor="let post of posts" style="margin-top:20px">
+      <div class="row">
+        <div class="col-md-2">
+          <img src="{{baseImgUrl+post.thumbnail}}" height="120" width="100%">
+        </div>
+        <div class="col-md-10">
+          <h4 style="margin-top:10px"><a routerLink="show/{{post.id}}">{{post.title}}</a></h4>
+          <p style="overflow:hidden; white-space: nowrap;">{{post.body}}</p>
+          <small>Last update on: {{post.lastTouchAt}}</small>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <nav aria-label="...">
+      <ul *ngIf="!paginationHidden" class="pagination">
+        <li class="{{pagePrevClass}}">
+          <button class="page-link" tabindex="-1" aria-disabled="true" (click)="loadPosts('prev')">Previous</button>
+        </li>
+        <li class="page-item disabled">
+          <p class="page-link" aria-disabled="true">Page {{page}} of {{totalPages}}</p>
+        </li>
+        <li class="{{pageNextClass}}">
+          <button class="page-link" (click)="loadPosts('next')">Next</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

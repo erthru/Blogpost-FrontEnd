@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <br>
+      <h3>Register Admin</h3>
+      <form (ngSubmit)="register()">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="textfield" name="firstname" [(ngModel)]="txFirstName" class="form-control" placeholder="firstname">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="textfield" name="lastname" [(ngModel)]="txLastName" class="form-control" placeholder="lastname">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="textfield" name="email" [(ngModel)]="txEmail" class="form-control" placeholder="email">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" [(ngModel)]="txPassword" class="form-control" placeholder="password">
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" name="password" [(ngModel)]="txPasswordRe" class="form-control" placeholder="password">
+        </div>
+        <label>Regitered already ? <a class="" routerLink="/login">Login</a></label><br>
+        <button class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
