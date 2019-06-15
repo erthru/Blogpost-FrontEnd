@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from 'src/environments/environment.prod';
 import swal from 'sweetalert2';
+import { ApiserviceService } from '../apiservice.service';
 
 @Component({
   selector: 'app-adminlogin',
@@ -14,7 +13,7 @@ export class AdminloginComponent implements OnInit {
   txEmail = "";
   txPassword = "";
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private api: ApiserviceService) { }
 
   ngOnInit() {
     if (localStorage.getItem("id"))
@@ -28,7 +27,7 @@ export class AdminloginComponent implements OnInit {
       let formData = new FormData();
       formData.append("email", this.txEmail);
       formData.append("password", this.txPassword);
-      this.http.post(environment.api + "author/login", formData).subscribe(res => {
+      this.api.loginAdmin(formData).subscribe(res => {
         console.log(res);
         if(!res["data"]){
           swal.fire("Oops","Login failed. Check email or password");

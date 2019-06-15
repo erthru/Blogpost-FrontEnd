@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment.prod';
+import { ApiserviceService } from '../apiservice.service';
 
 @Component({
   selector: 'app-adminroot',
@@ -12,13 +11,13 @@ export class AdminrootComponent implements OnInit {
 
   author = "";
 
-  constructor(private router: Router, private http:HttpClient) { }
+  constructor(private router: Router, private api:ApiserviceService) { }
 
   ngOnInit() {
     if(!localStorage.getItem("id"))
       this.router.navigateByUrl("/login")
 
-    this.http.get(environment.api+"author/"+localStorage.getItem("id")).subscribe(res=>{
+    this.api.getAdminDetail(localStorage.getItem("id")).subscribe(res=>{
       this.author = res["data"]["firstName"]+" "+res["data"]["lastName"];
     });
   }

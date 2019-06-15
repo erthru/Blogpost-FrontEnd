@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment.prod';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ApiserviceService } from '../apiservice.service';
 
 @Component({
   selector: 'app-adminpostshow',
@@ -16,17 +15,17 @@ export class AdminpostshowComponent implements OnInit {
   imgThumbnailHidden = false;
   spinnerHidden = true;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router:Router) { }
+  constructor(private api:ApiserviceService, private route: ActivatedRoute, private router:Router) { }
 
   ngOnInit() {
     this.show();
   }
 
   show() {
-    this.http.get(environment.api + "post/" + this.route.snapshot.paramMap.get("id")).subscribe(res => {
+    this.api.getPost(this.route.snapshot.paramMap.get("id")).subscribe(res => {
       this.txTitle = res["data"]["title"];
       this.txBody = res["data"]["body"];
-      this.imgThumbnail = environment.api + "uploads/" + res["data"]["thumbnail"];
+      this.imgThumbnail = this.api.baseUrl + "uploads/" + res["data"]["thumbnail"];
     });
   }
 
@@ -37,8 +36,8 @@ export class AdminpostshowComponent implements OnInit {
     let formData = new FormData();
     formData.append("thumbnail",file);
 
-    this.http.post(environment.api+"post/thumbnail/"+this.route.snapshot.paramMap.get("id"), formData).subscribe(res=>{
-      this.imgThumbnail = environment.api+"uploads/"+res["data"]["thumbnail"];
+    this.api.updatePostThumbnail(formData,this.route.snapshot.paramMap.get("id")).subscribe(res=>{
+      this.imgThumbnail = this.api.baseUrl+"uploads/"+res["data"]["thumbnail"];
       this.spinnerHidden = true;
       this.imgThumbnailHidden = false;
     });
@@ -50,7 +49,7 @@ export class AdminpostshowComponent implements OnInit {
     formData.append("body",this.txBody);
     formData.append("authorId",localStorage.getItem("id"));
 
-    this.http.put(environment.api+"post/"+this.route.snapshot.paramMap.get("id"),formData).subscribe(res=>{
+    this.api.updatePost(formData,this.route.snapshot.paramMap.get("id")).subscribe(res=>{
       this.router.navigateByUrl("/admin/post");
     });
   }

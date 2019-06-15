@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment.prod';
+import { ApiserviceService } from '../apiservice.service';
 
 @Component({
   selector: 'app-adminpostcreate',
@@ -15,7 +14,7 @@ export class AdminpostcreateComponent implements OnInit {
   txBody = '';
   fileThumbnail = null;
 
-  constructor(private http: HttpClient, private router:Router) { }
+  constructor(private api:ApiserviceService, private router:Router) { }
 
   ngOnInit() {
   }
@@ -31,7 +30,7 @@ export class AdminpostcreateComponent implements OnInit {
       formData.append("body", this.txBody);
       formData.append("thumbnail", this.fileThumbnail);
       formData.append("authorId",localStorage.getItem("id"));
-      this.http.post(environment.api+"post", formData).subscribe(res => {
+      this.api.createPost(formData).subscribe(res => {
         this.router.navigateByUrl("/admin/post");
       }, error => {
         console.log(error);

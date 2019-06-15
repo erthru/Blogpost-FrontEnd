@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment.prod';
+import { ApiserviceService } from '../apiservice.service';
 import swal from 'sweetalert2';
 
 @Component({
@@ -17,14 +16,14 @@ export class AdmindetailComponent implements OnInit {
   txPassword = "";
   txPasswordRe = "";
 
-  constructor(private router:Router, private http:HttpClient) { }
+  constructor(private router:Router, private api:ApiserviceService) { }
 
   ngOnInit() {
     this.show();
   }
 
   show(){
-    this.http.get(environment.api+"author/"+localStorage.getItem("id")).subscribe(res=>{
+    this.api.getAdminDetail(localStorage.getItem("id")).subscribe(res=>{
       this.txFirstName = res["data"]["firstName"];
       this.txLastName = res["data"]["lastName"];
       this.txEmail = res["data"]["email"];
@@ -46,7 +45,7 @@ export class AdmindetailComponent implements OnInit {
       formData.append("lastName",this.txLastName);
       formData.append("email",this.txEmail);
       formData.append("password",this.txPassword);
-      this.http.put(environment.api+"author/"+localStorage.getItem("id"),formData).subscribe(res=>{
+      this.api.updateAdminDetail(formData).subscribe(res=>{
         console.log(res);
         if(!res["data"]){
           swal.fire("Oops","Email exist");

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment.prod';
+import { ApiserviceService } from '../apiservice.service';
 
 @Component({
   selector: 'app-adminregister',
@@ -17,7 +16,7 @@ export class AdminregisterComponent implements OnInit {
   txPassword = "";
   txPasswordRe = "";
 
-  constructor(private router:Router, private http:HttpClient) { }
+  constructor(private router:Router, private api:ApiserviceService) { }
 
   ngOnInit() {
     if (localStorage.getItem("id"))
@@ -37,7 +36,7 @@ export class AdminregisterComponent implements OnInit {
       formData.append("lastName",this.txLastName);
       formData.append("email",this.txEmail);
       formData.append("password",this.txPassword);
-      this.http.post(environment.api+"author",formData).subscribe(res=>{
+      this.api.registerAdmin(formData).subscribe(res=>{
         console.log(res);
         if(!res["data"]){
           swal.fire("Oops","Email exist");

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment.prod';
+import { ApiserviceService } from '../apiservice.service';
 
 @Component({
   selector: 'app-adminpost',
@@ -11,14 +10,14 @@ export class AdminpostComponent implements OnInit {
 
   posts = [];
   page = 0;
-  baseImgUrl = environment.api + "uploads/";
+  baseImgUrl = this.api.baseUrl + "uploads/";
   totalPages = 0;
   paginationHidden = true;
   pagePrevClass = "page-item disabled";
   pageNextClass = "page-item disabled";
   txSearch = "";
 
-  constructor(private http: HttpClient) { }
+  constructor(private api: ApiserviceService) { }
 
   ngOnInit() {
     this.loadPosts("next");
@@ -32,7 +31,7 @@ export class AdminpostComponent implements OnInit {
     else
       this.page -= 1;
 
-    this.http.get(environment.api + "post/author/" + localStorage.getItem("id") + "?page=" + this.page + "&size=5&sort=id,desc").subscribe(res => {
+    this.api.getPosts(this.page).subscribe(res => {
       this.posts = res["data"]["content"];
       this.totalPages = res["data"]["totalPages"];
       console.log(this.posts);
@@ -58,7 +57,7 @@ export class AdminpostComponent implements OnInit {
     } else {
       this.paginationHidden = true;
 
-      this.http.get(environment.api + "post/search/query?q=" + this.txSearch).subscribe(res => {
+      this.api.searchPosts(this.txSearch).subscribe(res => {
         this.posts = res["data"];
       });
     }
