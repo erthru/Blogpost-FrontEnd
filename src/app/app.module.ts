@@ -13,6 +13,9 @@ import { AdminloginComponent } from './adminlogin/adminlogin.component';
 import { AdminregisterComponent } from './adminregister/adminregister.component';
 import { AdminpostshowComponent } from './adminpostshow/adminpostshow.component';
 import { AdmindetailComponent } from './admindetail/admindetail.component';
+import { MaincontentComponent } from './maincontent/maincontent.component';
+import { MaincontentpostComponent } from './maincontentpost/maincontentpost.component';
+import { MaincontentpostshowComponent } from './maincontentpostshow/maincontentpostshow.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { AdmindetailComponent } from './admindetail/admindetail.component';
     AdminloginComponent,
     AdminregisterComponent,
     AdminpostshowComponent,
-    AdmindetailComponent
+    AdmindetailComponent,
+    MaincontentComponent,
+    MaincontentpostComponent,
+    MaincontentpostshowComponent
   ],
   imports: [
     BrowserModule,

@@ -2,8 +2,10 @@
   <div class="col-md-6">
     <br>
     <h3>Modify Post</h3>
+    <small>Last updated at: {{lbUpdatedAt}}</small>
     <form (ngSubmit)="submit()">
       <div class="form-group">
+        <br>
         <label>Title of post</label>
         <input type="textfield" class="form-control" [(ngModel)]="txTitle" name="title" placeholder="Title" />
       </div>

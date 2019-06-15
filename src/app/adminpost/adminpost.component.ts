@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiserviceService } from '../apiservice.service';
+import swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adminpost',
@@ -17,7 +19,7 @@ export class AdminpostComponent implements OnInit {
   pageNextClass = "page-item disabled";
   txSearch = "";
 
-  constructor(private api: ApiserviceService) { }
+  constructor(private api: ApiserviceService, private route:Router) { }
 
   ngOnInit() {
     this.loadPosts("next");
@@ -28,10 +30,10 @@ export class AdminpostComponent implements OnInit {
 
     if (mode == "next")
       this.page += 1;
-    else
+    else if (mode == "prev")
       this.page -= 1;
 
-    this.api.getPosts(this.page).subscribe(res => {
+    this.api.getAuthorPosts(localStorage.getItem("id"),this.page).subscribe(res => {
       this.posts = res["data"]["content"];
       this.totalPages = res["data"]["totalPages"];
       console.log(this.posts);
@@ -57,10 +59,27 @@ export class AdminpostComponent implements OnInit {
     } else {
       this.paginationHidden = true;
 
-      this.api.searchPosts(this.txSearch).subscribe(res => {
+      this.api.searchAuthorPosts(localStorage.getItem("id"),this.txSearch).subscribe(res => {
         this.posts = res["data"];
       });
     }
+  }
+
+  deletePost(id:String){
+    swal.fire({
+      title: "Confirmation",
+      text: "Delete this post ?",
+      type: "warning",
+      confirmButtonText: "Delete",
+      showCancelButton: true,
+      cancelButtonText: "Cancel"
+    }).then(willDelete=>{
+      if(willDelete.value){
+        this.api.deletePost(id).subscribe(res=>{
+          this.loadPosts(null);
+        });
+      }
+    });
   }
 
 }

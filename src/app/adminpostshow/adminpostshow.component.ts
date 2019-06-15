@@ -9,6 +9,7 @@ import { ApiserviceService } from '../apiservice.service';
 })
 export class AdminpostshowComponent implements OnInit {
 
+  lbUpdatedAt = "";
   txTitle = "";
   txBody = "";
   imgThumbnail = "";
@@ -26,6 +27,7 @@ export class AdminpostshowComponent implements OnInit {
       this.txTitle = res["data"]["title"];
       this.txBody = res["data"]["body"];
       this.imgThumbnail = this.api.baseUrl + "uploads/" + res["data"]["thumbnail"];
+      this.lbUpdatedAt = res["data"]["lastTouchAt"];
     });
   }
 

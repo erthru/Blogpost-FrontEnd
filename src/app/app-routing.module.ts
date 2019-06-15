@@ -8,8 +8,25 @@ import { AdminloginComponent } from './adminlogin/adminlogin.component';
 import { AdminregisterComponent } from './adminregister/adminregister.component';
 import { AdminpostshowComponent } from './adminpostshow/adminpostshow.component';
 import { AdmindetailComponent } from './admindetail/admindetail.component';
+import { MaincontentComponent } from './maincontent/maincontent.component';
+import { MaincontentpostComponent } from './maincontentpost/maincontentpost.component';
+import { MaincontentpostshowComponent } from './maincontentpostshow/maincontentpostshow.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: MaincontentComponent,
+    children:[
+      {
+        path: '',
+        component: MaincontentpostComponent
+      },
+      {
+        path: 'show/:id',
+        component: MaincontentpostshowComponent
+      }
+    ]
+  },
   {
     path: 'admin',
     component: AdminrootComponent,

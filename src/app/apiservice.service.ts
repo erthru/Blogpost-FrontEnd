@@ -26,8 +26,16 @@ export class ApiserviceService {
     return this.http.post(this.baseUrl+"author",formData);
   }
 
-  getPosts(page:Number){
+  getAuthorPosts(id:String, page:Number){
     return this.http.get(this.baseUrl + "post/author/" + localStorage.getItem("id") + "?page=" + page + "&size=5&sort=id,desc")
+  }
+
+  getPosts(page:Number){
+    return this.http.get(this.baseUrl + "post?page=" + page + "&size=5&sort=id,desc")
+  }
+
+  searchAuthorPosts(id:String, query:String){
+    return this.http.get(this.baseUrl + "post/search/author/"+id+"/query?q=" + query);
   }
 
   searchPosts(query:String){
@@ -48,6 +56,10 @@ export class ApiserviceService {
 
   updatePost(formData:FormData, id:String){
     return this.http.put(this.baseUrl+"post/"+id,formData)
+  }
+
+  deletePost(id:String){
+    return this.http.delete(this.baseUrl+"post/"+id);
   }
 
 }
